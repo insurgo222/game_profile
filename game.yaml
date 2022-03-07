@@ -1,3 +1,5 @@
 payload:
   # Yugioh MasterDuel
   - DOMAIN-SUFFIX,mo.konami.net
+  # Steam CDN
+  - DOMAIN-SUFFIX,akamaihd.net
