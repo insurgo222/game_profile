@@ -4,3 +4,4 @@ payload:
   - DOMAIN-SUFFIX,akamai.steamstatic.com
   # Steam CDN
   - DOMAIN-SUFFIX,akamaihd.net
+  - DOMAIN-SUFFIX,kaiheila.cn
