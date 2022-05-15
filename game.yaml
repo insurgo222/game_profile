@@ -4,4 +4,7 @@ payload:
   - DOMAIN-SUFFIX,akamai.steamstatic.com
   # Steam CDN
   - DOMAIN-SUFFIX,akamaihd.net
+  # kaiheila
   - DOMAIN-SUFFIX,kaiheila.cn
+  # hcaptcha
+  - DOMAIN-SUFFIX,hcaptcha.com
