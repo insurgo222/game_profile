@@ -1,0 +1,6 @@
+
+payload:
+  # hcaptcha
+  - DOMAIN-SUFFIX,hcaptcha.com
+  # steam
+  - DOMAIN-SUFFIX,steampowered.com
