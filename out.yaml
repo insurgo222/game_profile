@@ -4,3 +4,4 @@ payload:
   - DOMAIN-SUFFIX,hcaptcha.com
   # steam
   - DOMAIN-SUFFIX,steampowered.com
+  - DOMAIN-SUFFIX,steam-chat.com
