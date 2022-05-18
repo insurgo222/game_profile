@@ -1,10 +1,11 @@
 payload:
   # Yugioh MasterDuel
   - DOMAIN-SUFFIX,mo.konami.net
-  - DOMAIN-SUFFIX,akamai.steamstatic.com
   # Steam CDN
   - DOMAIN-SUFFIX,akamaihd.net
   - DOMAIN-SUFFIX,steamcontent.com
   - DOMAIN,api.steampowered.com
+  - DOMAIN-SUFFIX,akamai.steamstatic.com
+  - DOMAIN-SUFFIX,steamstatic.com
   # kaiheila
   - DOMAIN-SUFFIX,kaiheila.cn
