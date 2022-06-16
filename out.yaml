@@ -5,3 +5,4 @@ payload:
   # steam
   - DOMAIN,store.steampowered.com
   - DOMAIN-SUFFIX,steam-chat.com
+  - DOMAIN,api.steampowered.com
