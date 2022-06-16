@@ -4,7 +4,6 @@ payload:
   # Steam CDN
   - DOMAIN-SUFFIX,akamaihd.net
   - DOMAIN-SUFFIX,steamcontent.com
-  - DOMAIN,api.steampowered.com
   - DOMAIN-SUFFIX,akamai.steamstatic.com
   - DOMAIN-SUFFIX,steamstatic.com
   # kaiheila
