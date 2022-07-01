@@ -6,3 +6,5 @@ payload:
   - DOMAIN,store.steampowered.com
   - DOMAIN-SUFFIX,steam-chat.com
   - DOMAIN,api.steampowered.com
+  # Yugioh MasterDuel
+  - DOMAIN-SUFFIX,mo.konami.net
