@@ -4,5 +4,6 @@ payload:
   - DOMAIN-SUFFIX,steamcontent.com
   - DOMAIN-SUFFIX,akamai.steamstatic.com
   - DOMAIN-SUFFIX,steamstatic.com
+  - DOMAIN-SUFFIX,dota2.com
   # kaiheila
   - DOMAIN-SUFFIX,kaiheila.cn
