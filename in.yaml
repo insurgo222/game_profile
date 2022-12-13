@@ -6,3 +6,6 @@ payload:
   - DOMAIN-SUFFIX,dota2.com
   # kaiheila
   - DOMAIN-SUFFIX,kaiheila.cn
+  # epicgames
+  - DOMAIN-SUFFIX,epicgames.dev
+  - DOMAIN-SUFFIX,epicgames.com
