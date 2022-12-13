@@ -9,3 +9,4 @@ payload:
   # epicgames
   - DOMAIN-SUFFIX,epicgames.dev
   - DOMAIN-SUFFIX,epicgames.com
+  - DOMAIN-SUFFIX,unrealengine.com
