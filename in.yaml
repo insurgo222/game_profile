@@ -10,5 +10,7 @@ payload:
   - DOMAIN-SUFFIX,epicgames.dev
   - DOMAIN-SUFFIX,epicgames.com
   - DOMAIN-SUFFIX,unrealengine.com
+  #cloudflare
+  - DOMAIN-SUFFIX,cloudflarestorage.com
   # ip
   - IP-CIDR,45.91.81.219/32
