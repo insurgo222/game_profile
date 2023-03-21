@@ -10,3 +10,5 @@ payload:
   - DOMAIN-SUFFIX,steamserver.net
   # Yugioh MasterDuel
   - DOMAIN-SUFFIX,mo.konami.net
+  # OpenAI
+  - DOMAIN-SUFFIX,openai.com
