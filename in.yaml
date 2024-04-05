@@ -13,5 +13,8 @@ payload:
   - DOMAIN-SUFFIX,unrealengine.com
   #cloudflare
   - DOMAIN-SUFFIX,cloudflarestorage.com
+  #EA
+  - DOMAIN-SUFFIX,ea.com
+  - DOMAIN-SUFFIX,split.io
   # ip
   - IP-CIDR,45.91.81.219/32
