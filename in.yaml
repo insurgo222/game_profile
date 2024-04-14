@@ -1,4 +1,6 @@
 payload:
+  # UU
+  - PROCESS-NAME,uu.exe
   # Steam CDN
   - DOMAIN-SUFFIX,akamaihd.net
   - DOMAIN-SUFFIX,steamcontent.com
@@ -21,25 +23,16 @@ payload:
   - DOMAIN-SUFFIX,tnt-ea.com
   - DOMAIN-SUFFIX,dice.se
   - DOMAIN-SUFFIX,origin.com
-  - IP-CIDR,162.247.243.0/24
-  - IP-CIDR,54.204.220.0/24
-  - IP-CIDR,104.79.0.0/24
-  - IP-CIDR,18.169.133.0/24
-  - IP-CIDR,52.215.171.0/24
-  - IP-CIDR,159.153.51.0/24
-  - IP-CIDR,3.251.213.0/24
-  - IP-CIDR,52.215.171.0/24
-  - IP-CIDR,34.197.53.0/24
-  - IP-CIDR,162.247.243.0/24
-  - IP-CIDR,23.215.254.0/24
-  - IP-CIDR,104.71.166.0/24
-  - IP-CIDR,107.20.68.0/24
-  - IP-CIDR,34.197.35.0/24
-  - IP-CIDR,34.197.35.0/24
-  - IP-CIDR,35.175.6.0/24
-  - IP-CIDR,44.209.204.0/24
-  - IP-CIDR,23.54.247.0/24
-  - IP-CIDR,23.37.116.0/24
+  - PROCESS-NAME,EACefSubProcess.exe
+  - PROCESS-NAME,BF2042.exe
+  - PROCESS-NAME,EASteamProxy.exe
+  - PROCESS-NAME,EALocalHostSvc.exe
+  - PROCESS-NAME,EAAntiCheat.Installer.exe
+  - PROCESS-NAME,EAAntiCheat.GameServiceLauncher.exe
+  - PROCESS-NAME,EAAntiCheat.GameService.exe
+  - PROCESS-NAME,EABackgroundService.exe
+  - PROCESS-NAME,EADesktop.exe
+  - PROCESS-NAME,EALocalHostSvc.exe
   # ip
   - IP-CIDR,45.121.184.0/24
   - IP-CIDR,103.10.124.0/23
