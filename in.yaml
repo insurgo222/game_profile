@@ -5,7 +5,6 @@ payload:
   - DOMAIN-SUFFIX,akamaihd.net
   - DOMAIN-SUFFIX,steamcontent.com
   - DOMAIN-SUFFIX,akamai.steamstatic.com
-  - DOMAIN-SUFFIX,steamserver.net
   - DOMAIN-SUFFIX,dota2.com
   - DOMAIN,cdn.steamstatic.com
   # kaiheila
