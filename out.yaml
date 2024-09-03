@@ -7,7 +7,6 @@ payload:
   - DOMAIN-SUFFIX,steamcommunity.com
   - DOMAIN-SUFFIX,steam-chat.com
   - DOMAIN,api.steampowered.com
-  - DOMAIN-SUFFIX,steamstatic.com
   - DOMAIN-SUFFIX,steamserver.net
   # Yugioh MasterDuel
   - DOMAIN-SUFFIX,mo.konami.net
