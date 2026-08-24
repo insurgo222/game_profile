@@ -1,0 +1,54 @@
+name: Sync and Convert Rulesets to MRS
+
+on:
+  schedule:
+    - cron: '0 20 * * *' # 每天 UTC 20:00 (北京时间凌晨 4:00) 自动执行
+  workflow_dispatch:     # 支持在 GitHub 页面手动一键触发
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Mihomo (Clash.Meta Core)
+        run: |
+          # 获取 Mihomo 最新 Release 并解压
+          RELEASE_TAG=$(curl -sL https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r .tag_name)
+          curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/${RELEASE_TAG}/mihomo-linux-amd64-${RELEASE_TAG}.gz" | gzip -d > mihomo
+          chmod +x mihomo
+
+      - name: Fetch and Convert Rulesets
+        run: |
+          mkdir -p rules
+          
+          # ===== 在此处按需添加你的规则源 =====
+          # 格式说明: ./mihomo convert-ruleset <behavior> <format> <input-file> <output-file>
+          # behavior 支持: domain / ipcidr / classical
+          
+          # 示例 1: 域名类规则 (Domain)
+          #curl -sL "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt" -o direct_temp.yaml
+          #./mihomo convert-ruleset domain yaml direct_temp.yaml rules/reject.mrs
+          curl -sL "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main//Filters/AWAvenue-Ads-Rule-Clash.yaml" -o awavenue-ads.yaml
+          ./mihomo convert-ruleset domain yaml awavenue-ads.yaml rules/awavenue-ads.mrs
+          
+          # 示例 2: IP-CIDR 类规则 (IPCIDR)
+          #curl -sL "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt" -o cncidr_temp.yaml
+          #./mihomo convert-ruleset ipcidr yaml cncidr_temp.yaml rules/cncidr.mrs
+
+          # 示例 3: Classical 经典规则集
+          # curl -sL "<上游YAML链接>" -o classical_temp.yaml
+          # ./mihomo convert-ruleset classical yaml classical_temp.yaml rules/custom.mrs
+          
+
+          # 清理临时下载的文本文件
+          rm -f *_temp.yaml
+
+      - name: Commit and Push MRS Files
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add rules/*.mrs
+          git commit -m "Auto update rules [$(date '+%Y-%m-%d %H:%M:%S')]" || exit 0
+          git push
