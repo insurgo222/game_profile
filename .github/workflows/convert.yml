@@ -1,8 +1,8 @@
-name: Sync and Convert Rulesets to MRS
+name: Sync and Convert All Rules to MRS
 
 on:
   schedule:
-    - cron: '0 20 * * *' # 每天 UTC 20:00 (北京时间凌晨 4:00) 自动执行
+    - cron: '0 20 * * *' # 每天北京时间凌晨 4:00 自动同步转换
   workflow_dispatch:     # 支持在 GitHub 页面手动一键触发
 
 jobs:
@@ -12,43 +12,89 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Mihomo (Clash.Meta Core)
+      - name: Install Mihomo Core
         run: |
-          # 获取 Mihomo 最新 Release 并解压
           RELEASE_TAG=$(curl -sL https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r .tag_name)
           curl -sL "https://github.com/MetaCubeX/mihomo/releases/download/${RELEASE_TAG}/mihomo-linux-amd64-${RELEASE_TAG}.gz" | gzip -d > mihomo
           chmod +x mihomo
 
-      - name: Fetch and Convert Rulesets
+      - name: Process and Convert Rulesets
         run: |
           mkdir -p rules
-          
-          # ===== 在此处按需添加你的规则源 =====
-          # 格式说明: ./mihomo convert-ruleset <behavior> <format> <input-file> <output-file>
-          # behavior 支持: domain / ipcidr / classical
-          
-          # 示例 1: 域名类规则 (Domain)
-          #curl -sL "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt" -o direct_temp.yaml
-          #./mihomo convert-ruleset domain yaml direct_temp.yaml rules/reject.mrs
-          curl -sL "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main//Filters/AWAvenue-Ads-Rule-Clash.yaml" -o awavenue-ads.yaml
-          ./mihomo convert-ruleset domain yaml awavenue-ads.yaml rules/awavenue-ads.mrs
-          
-          # 示例 2: IP-CIDR 类规则 (IPCIDR)
-          #curl -sL "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt" -o cncidr_temp.yaml
-          #./mihomo convert-ruleset ipcidr yaml cncidr_temp.yaml rules/cncidr.mrs
 
-          # 示例 3: Classical 经典规则集
-          # curl -sL "<上游YAML链接>" -o classical_temp.yaml
-          # ./mihomo convert-ruleset classical yaml classical_temp.yaml rules/custom.mrs
-          
+          # 转换辅助函数: convert_rule <behavior> <format> <url> <output_filename_without_ext>
+          convert_rule() {
+            local behavior=$1
+            local format=$2
+            local url=$3
+            local name=$4
+            echo "Converting [$behavior] $name..."
+            if curl -sL --connect-timeout 15 --retry 3 "$url" -o "temp_${name}.${format}"; then
+              ./mihomo convert-ruleset "$behavior" "$format" "temp_${name}.${format}" "rules/${name}.mrs" || echo "Failed to convert $name"
+              rm -f "temp_${name}.${format}"
+            else
+              echo "Download failed for $name: $url"
+            fi
+          }
 
-          # 清理临时下载的文本文件
-          rm -f *_temp.yaml
+          # 直接下载已有的 MRS 文件: download_mrs <url> <output_filename_without_ext>
+          download_mrs() {
+            local url=$1
+            local name=$2
+            echo "Downloading prebuilt MRS: $name..."
+            curl -sL --connect-timeout 15 --retry 3 "$url" -o "rules/${name}.mrs" || echo "Failed to download $name"
+          }
+
+          # ================= 1. 直接同步上游现成的 MRS 文件 =================
+          download_mrs "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/fakeip-filter.mrs" "fakeip-filter"
+          download_mrs "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/cn.mrs" "fakeip-cn"
+          download_mrs "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/proxy.mrs" "fakeip-proxy"
+          download_mrs "https://github.com/insurgo222/game_profile/raw/refs/heads/main/rules/awavenue-ads.mrs" "awavenue-ads"
+          download_mrs "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs" "cn_domain"
+
+          # ================= 2. 域名类规则转换 (Domain Rules) =================
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt" "reject"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt" "icloud"
+          convert_rule domain yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Apple/Apple_Domain.yaml" "apple_domain"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt" "google"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt" "proxy"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt" "direct"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt" "private"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt" "gfw"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt" "tld-not-cn"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@master/Gemini/Gemini_Domain.yaml" "gemini"
+          convert-rule domain yaml "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main//Filters/AWAvenue-Ads-Rule-Clash.yaml" "AWAvenue-Ads-Rule-Clash"
+
+          # ================= 3. IP-CIDR 类规则转换 (IP-CIDR Rules) =================
+          convert_rule ipcidr yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt" "telegramcidr"
+          convert_rule ipcidr yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt" "cncidr"
+          convert_rule ipcidr yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt" "lancidr"
+
+          # ================= 4. Classical 经典规则转换 (Classical Rules) =================
+          convert_rule classical yaml "https://gist.githubusercontent.com/cnfree8964/0864fd1d2e88936a095fb40d74ce4993/raw/collection.yaml" "collection"
+          convert_rule classical yaml "https://raw.githubusercontent.com/insurgo222/game_profile/main/in.yaml" "in"
+          convert_rule classical yaml "https://raw.githubusercontent.com/insurgo222/game_profile/main/out.yaml" "out"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Binance/Binance.yaml" "binance"
+          convert_rule classical yaml "https://cdn.jsdelivr.net/gh/Femoon/clash-rules/steam.yaml" "steam_track"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Classical.yaml" "apple"
+          convert_rule classical text "https://raw.githubusercontent.com/mrbruce516/apns-fix/refs/heads/main/Apple_APNs.list" "apple_push"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml" "steam"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.yaml" "steamcn"
+          convert_rule classical yaml "https://raw.githubusercontent.com/Z-Siqi/Clash-for-Windows_Rule/main/Rule/Epic-Games" "epic_game"
+          convert_rule classical yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/applications.txt" "applications"
+          convert_rule classical yaml "https://raw.githubusercontent.com/insurgo222/game_profile/refs/heads/main/bloack_file.yaml" "bilibilimdcn"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleTV/AppleTV.yaml" "appletv"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/FitnessPlus/FitnessPlus.yaml" "fitnessplus"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppStore/AppStore.yaml" "appstore"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleProxy/AppleProxy.yaml" "appleproxy"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleMusic/AppleMusic.yaml" "applemusic"
+          convert_rule classical yaml "https://cdn.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@master/AppleAI/AppleAI.yaml" "appleintelligence"
+          convert_rule classical yaml "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Xbox/Xbox.yaml" "xbox"
 
       - name: Commit and Push MRS Files
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add rules/*.mrs
-          git commit -m "Auto update rules [$(date '+%Y-%m-%d %H:%M:%S')]" || exit 0
+          git commit -m "Auto update MRS rulesets [$(date '+%Y-%m-%d %H:%M:%S')]" || exit 0
           git push
