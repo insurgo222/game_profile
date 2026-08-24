@@ -22,7 +22,7 @@ jobs:
         run: |
           mkdir -p rules
 
-          # 转换辅助函数: convert_rule <behavior> <format> <url> <output_filename_without_ext>
+          # 定义转换核心函数
           convert_rule() {
             local behavior=$1
             local format=$2
@@ -37,7 +37,12 @@ jobs:
             fi
           }
 
-          # 直接下载已有的 MRS 文件: download_mrs <url> <output_filename_without_ext>
+          # 增加兼容别名，防止手误写成 convert-rule
+          convert-rule() {
+            convert_rule "$@"
+          }
+
+          # 直接下载已有的 MRS 文件
           download_mrs() {
             local url=$1
             local name=$2
@@ -49,7 +54,6 @@ jobs:
           download_mrs "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/fakeip-filter.mrs" "fakeip-filter"
           download_mrs "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/cn.mrs" "fakeip-cn"
           download_mrs "https://github.com/DustinWin/ruleset_geodata/releases/download/mihomo-ruleset/proxy.mrs" "fakeip-proxy"
-          download_mrs "https://github.com/insurgo222/game_profile/raw/refs/heads/main/rules/awavenue-ads.mrs" "awavenue-ads"
           download_mrs "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs" "cn_domain"
 
           # ================= 2. 域名类规则转换 (Domain Rules) =================
@@ -62,8 +66,8 @@ jobs:
           convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt" "private"
           convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt" "gfw"
           convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt" "tld-not-cn"
-          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@master/Gemini/Gemini_Domain.yaml" "gemini"
           convert-rule domain yaml "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main//Filters/AWAvenue-Ads-Rule-Clash.yaml" "AWAvenue-Ads-Rule-Clash"
+          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@master/Gemini/Gemini_Domain.yaml" "gemini"
 
           # ================= 3. IP-CIDR 类规则转换 (IP-CIDR Rules) =================
           convert_rule ipcidr yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt" "telegramcidr"
@@ -96,5 +100,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add rules/*.mrs
+          git commit -m "Auto update MRS rulesets [$(date '+%Y-%m-%d %H:%M:%S')]" || exit 0
+          git push
           git commit -m "Auto update MRS rulesets [$(date '+%Y-%m-%d %H:%M:%S')]" || exit 0
           git push
