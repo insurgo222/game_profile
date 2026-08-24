@@ -102,5 +102,3 @@ jobs:
           git add rules/*.mrs
           git commit -m "Auto update MRS rulesets [$(date '+%Y-%m-%d %H:%M:%S')]" || exit 0
           git push
-          git commit -m "Auto update MRS rulesets [$(date '+%Y-%m-%d %H:%M:%S')]" || exit 0
-          git push
