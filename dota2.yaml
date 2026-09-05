@@ -1,3 +1,4 @@
+payload:
   # 1. 匹配 Valve 全球中继与官方服务器自治域（截图中 162.254.x、155.133.x 等均归属此 ASN）
   - IP-ASN,32590,DIRECT,no-resolve
 
