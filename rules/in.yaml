@@ -1,0 +1,23 @@
+payload:
+  # UU
+  - PROCESS-NAME,uu.exe
+  # Steam CDN
+  - DOMAIN-SUFFIX,akamaihd.net
+  - DOMAIN-SUFFIX,steamcontent.com
+  - DOMAIN-SUFFIX,dota2.com
+  - DOMAIN-SUFFIX,com.8686c.com
+  
+  - DOMAIN-SUFFIX,steamstatic.com
+  - DOMAIN-SUFFIX,steamserver.net
+  - DOMAIN-SUFFIX,test.steampowered.com
+  - DOMAIN-SUFFIX,api.steampowered.com
+
+  # kaiheila
+  - DOMAIN-SUFFIX,kaiheila.cn
+  # epicgames
+  - DOMAIN-SUFFIX,epicgames.com
+  - DOMAIN-SUFFIX,epicgames.dev
+  - DOMAIN-SUFFIX,epicgames.net
+  - DOMAIN-SUFFIX,unrealengine.com
+  #cloudflare
+  - DOMAIN-SUFFIX,cloudflarestorage.com
