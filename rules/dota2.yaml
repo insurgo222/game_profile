@@ -7,5 +7,4 @@ payload:
 
   # 3. 匹配游戏协调服务器及新闻域名
   - DOMAIN-SUFFIX,dota2.com,DIRECT
-  - DOMAIN-SUFFIX,steamserver.net,DIRECT
   - DOMAIN-SUFFIX,valvesoftware.com,DIRECT   
