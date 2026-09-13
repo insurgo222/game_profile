@@ -1,0 +1,26 @@
+payload:
+  # --- 1. 地平线与开发商核心服务 ---
+  - DOMAIN-SUFFIX,forzamotorsport.net
+  - DOMAIN-SUFFIX,turn10studios.com
+  - DOMAIN-SUFFIX,playground-games.com
+
+  # --- 2. Xbox Live 与多人匹配服务 (PlayFab) ---
+  - DOMAIN-SUFFIX,xboxlive.com
+  - DOMAIN-SUFFIX,xbox.com
+  - DOMAIN-SUFFIX,playfab.com
+  - DOMAIN-SUFFIX,playfabapi.com
+  - DOMAIN-SUFFIX,gameservices.xboxlive.com
+  - DOMAIN-KEYWORD,xboxlive
+
+  # --- 3. 微软游戏云服务与中继调度 ---
+  - DOMAIN-SUFFIX,trafficmanager.net
+  - DOMAIN-SUFFIX,azureedge.net
+  - DOMAIN-SUFFIX,msecnd.net
+
+  # --- 4. Xbox 联机游戏核心数据端口 ---
+  - DST-PORT,3074
+  - DST-PORT,88
+  # 6. Teredo 隧道与 IPsec 穿透（建议 DIRECT 直连以保证 NAT 开放）
+  - DST-PORT,3544
+  - DST-PORT,500
+  - DST-PORT,4500
