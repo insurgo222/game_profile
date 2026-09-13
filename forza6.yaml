@@ -20,6 +20,10 @@ payload:
   # --- 4. Xbox 联机游戏核心数据端口 ---
   - DST-PORT,3074
   - DST-PORT,88
+  
+  # 5. 微软网络连通性探测（建议走 DIRECT 直连，避免 NAT 类型误报）
+  - DOMAIN-SUFFIX,msftconnecttest.com
+  - DOMAIN-SUFFIX,msftncsi.com
   # 6. Teredo 隧道与 IPsec 穿透（建议 DIRECT 直连以保证 NAT 开放）
   - DST-PORT,3544
   - DST-PORT,500
