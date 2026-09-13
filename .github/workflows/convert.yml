@@ -78,7 +78,7 @@ jobs:
           sync_file "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Binance/Binance.yaml" "rules/binance.yaml"
           sync_file "https://cdn.jsdelivr.net/gh/Femoon/clash-rules/steam.yaml" "rules/steam_track.yaml"
           sync_file "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple_Classical.yaml" "rules/apple.yaml"
-          sync_file "https://raw.githubusercontent.com/mrbruce516/apns-fix/refs/heads/main/Apple_APNs.list" "rules/apple_push.list"
+          sync_file "https://raw.githubusercontent.com/mrbruce516/apns-fix/refs/heads/main/Apple_APNs.list" "rules/apple_push.yaml"
           sync_file "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Steam/Steam.yaml" "rules/steam.yaml"
           sync_file "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.yaml" "rules/steamcn.yaml"
           sync_file "https://raw.githubusercontent.com/Z-Siqi/Clash-for-Windows_Rule/main/Rule/Epic-Games" "rules/epic_game.yaml"
