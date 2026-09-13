@@ -3,8 +3,8 @@ payload:
   - IP-ASN,32590,DIRECT,no-resolve
 
   # 2. 匹配 Dota2 及 Steam 专属 UDP 游戏通讯端口段（防止部分租用第三方机房的 SDR 遗漏）
-  - AND,((NETWORK,UDP),(DST-PORT,27000-27150)),DIRECT
+  - AND,((NETWORK,UDP),(DST-PORT,27000-27150))
 
   # 3. 匹配游戏协调服务器及新闻域名
-  - DOMAIN-SUFFIX,dota2.com,DIRECT
-  - DOMAIN-SUFFIX,valvesoftware.com,DIRECT   
+  - DOMAIN-SUFFIX,dota2.com
+  - DOMAIN-SUFFIX,valvesoftware.com
