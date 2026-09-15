@@ -11,6 +11,8 @@ payload:
   - DOMAIN-SUFFIX,playfabapi.com
   - DOMAIN-SUFFIX,gameservices.xboxlive.com
   - DOMAIN-KEYWORD,xboxlive
+  - DOMAIN-SUFFIX,wns.windows.com
+  - DOMAIN-SUFFIX,service.signalr.net
 
   # --- 3. 微软游戏云服务与中继调度 ---
   - DOMAIN-SUFFIX,trafficmanager.net
