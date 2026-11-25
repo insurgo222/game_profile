@@ -67,7 +67,6 @@ jobs:
           convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt" "google"
           convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt" "proxy"
           convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt" "direct"
-          convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt" "private"
           convert_rule domain yaml "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml" "AWAvenue-Ads-Rule-Clash"
           convert_rule domain yaml "https://cdn.jsdelivr.net/gh/Accademia/Additional_Rule_For_Clash@master/Gemini/Gemini_Domain.yaml" "gemini"
 
